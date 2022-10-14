@@ -1,0 +1,150 @@
+%%%% 古いコマンド等の警告 %%%%
+	\RequirePackage[l2tabu, orthodox]{nag}
+%%%% 基本的な設定 %%%%
+	% Add english option if the body text is written in English.
+	% Remove draft option for final version
+	\documentclass[xelatex,a4paper,fancyhdr=true,jbase=11pt,twocolumn, magstyle=xreal,draft]{bxjsarticle}
+%	\usepackage[local, libertine, yuwin, final]{DigiconPreamble}	% Setting for Local
+	\usepackage[sharelatex, final]{Macro/DigiconPreamble}		% Setting for ShareLaTeX
+	\usepackage{enumitem}
+	\usepackage[at]{easylist}
+	\usepackage{graphicx} % 図の取り込み用
+	\usepackage{wrapfig}
+%%%% Setting Margin and Line Space %%%%
+	\setpagelayout{a4paper, top=17truemm, headheight=12truept, headsep=6truemm, bottom=32truemm, footskip=30truept, textheight=677truept, left=23truemm, right=23truemm, columnsep=2\jsZw}
+	\renewcommand{\baselinestretch}{0.8}
+%%%% Thesis Style File %%%%
+	\makeatletter
+    	\if@english
+    		\usepackage{digicon-iit-en}
+    	\else
+    		\usepackage{digicon-iit-jp}
+    	\fi
+	\makeatother
+%%%% Title, Abstract, and Keywords %%%
+	\title{大学院システム情報工学研究科知能機能システム専攻修士論文記述に関する研究}
+	\etitle{Study on University of Tsukuba can accurately adapt to a changing academic environment as it undergoes its own dynamic changes by instilling flexibility}
+	\author{筑 \ \ 波 \ \ 太 \ \ 郎}
+	\eauthor{TSUKUBA Taro}
+	\advisors{
+		\footnotesize
+		\begin{tabular}{ll}
+			 指導教員: & 知能 推進，機能 強化，工学 修得（知能機能工学域）\\
+		\end{tabular}
+	}
+	\eadvisors{
+		\scriptsize
+		\begin{tabular}{ll}
+			 Supervised by: & CHINO Suishin, KINO Kyoka and KOGAKU Shuhtoku (Division of Intelligent Interaction Technologies) \\
+		\end{tabular}
+	}
+	\authorheader{筑 \ 波 \ 太 \ 郎} % use English name when you use the English style
+	\dateheader{2017年3月}
+	\abstract{%
+		This paper explains the iit format of master thesis. Standardly, minimum of 8 pages and maximum 24 pages are recommended. If the body text is written in English, English title and English affiliation should come first, then the Japanese. The abstract should be provided in English no matter what language is used in the body text. The data and reference may be included in extra appendix if they can not be included in the body text.. This paper explains the iit format of master thesis. Standardly, minimum of 8 pages and maximum 24 pages are recommended. If the body text is written in English, English title and English affiliation should come first, then the Japanese. The abstract should be provided in English no matter what language is used in the body text. The data and reference may be included in extra appendix if they can not be included in the body text.. This paper explains the iit format of master thesis. Standardly, minimum of 8 pages and maximum 24 pages are recommended. If the body text is written in English, English title and English affiliation should come first, then the Japanese. The abstract should be provided in English no matter what language is used in the body text. The data and reference may be included in extra appendix if they can not be included in the body text.
+	}
+	\keywords{keyword-1, keyword-2, keyword-3, keyword-4, keyword-5, keyword-6}
+	\date{}
+%%%% Tikz用>Packages化予定 %%%%
+	\RequirePackage{circuitikz}
+	\RequirePackage{tikz}
+	\RequirePackage{tikzscale}
+	\usetikzlibrary{arrows, shapes, snakes, calc, quotes, angles, positioning, decorations.markings,patterns}
+	%%%% 根軌跡Tikz用スタイルの設定 %%%%
+		\tikzset{pole/.style={draw, cross out}}
+		\tikzset{zero/.style={draw, circle, inner sep=3pt}}
+		\tikzset{rl/.style={red, ultra thick, postaction={decorate, decoration={
+			markings,
+			mark=at position 0.5 with {\arrow{>}}
+			}}}
+		}
+		\tikzset{q-num/.style={below right}}
+	%%%% ブロック線図Tikz用スタイルの設定 %%%%
+		\tikzset{block/.style={draw, rectangle, text centered, text width=0.5cm, minimum height=0.8cm}}
+		\tikzset{sum/.style={draw, circle, inner sep=2pt}}
+		\tikzset{branch/.style={draw, circle, fill=black, inner sep=1pt}}
+%%%% 各種コマンドの定義・再定義 開始 %%%%
+	\makeatletter
+		% 式、図、表の番号を"節.No."に変更
+			\numberwithin{equation}{section}
+			\numberwithin{figure}{section}
+			\numberwithin{table}{section}
+		%%%% しおり、リンク作成用 %%%%
+			\usepackage{ifpdf}
+			\usepackage{ifluatex}
+			\usepackage{ifxetex}
+			\ifpdf
+				\ifluatex
+					\usepackage[pdfencoding=auto]{hyperref}
+				\else
+					\usepackage[whole,autotilde]{bxcjkjatype}
+					\usepackage[unicode]{hyperref}
+				\fi
+			\else
+				\ifxetex
+					\usepackage{hyperref}
+				\else
+					\usepackage[dvipdfmx]{hyperref}
+					\usepackage{pxjahyper}
+				\fi
+			\fi
+			\if@english
+    			\hypersetup{%
+    				bookmarksnumbered=true,%
+    				colorlinks=false,%
+    				setpagesize=false,%
+    				pdftitle={\@etitle},%
+    				pdfauthor={\@eauthor},%
+    				pdfsubject={Master Thesis},%
+    				pdfkeywords={\@keywords;}} % Edit Keywords
+			\else
+    			\hypersetup{%
+    				bookmarksnumbered=true,%
+    				colorlinks=false,%
+    				setpagesize=false,%
+    				pdftitle={\@title},%
+    				pdfauthor={\@author},%
+    				pdfsubject={修士論文},%
+    				pdfkeywords={\@keywords;}} % Edit Keywords
+			\fi
+		%%%% onlyamsmathによるtikzとの競合を回避 %%%%
+			\let\@@tikzpicture\tikzpicture
+			\def\tikzpicture{\catcode`\$=3 \@@tikzpicture}
+			\global\let\tikz@ensure@dollar@catcode=\relax
+	\makeatother
+%%%% 各種コマンドの定義・再定義 終了 %%%%
+%%%% biblatexを設定 %%%%
+	\usepackage[bibencoding=utf8,texencoding=utf8,backend=biber,style=ieee]{biblatex}
+	\addbibresource{library.bib}
+	\makeatletter
+    	\if@english
+        	\defbibheading{bibliography}[References]{\section*{#1}}
+    	\else
+    	    \defbibheading{bibliography}[参考文献]{\section*{#1}}
+        \fi
+    \makeatother
+%%%% Setting Comments for To Do, Review, Done %%%%	
+	% To Do, Review, Doneのための著者(河合新)を設定
+		\declareauthor{sktd}{Kawai}{red}
+		\declareauthor{skrw}{Kawai}{blue}
+		\declareauthor{skdn}{Kawai}{gray}
+		\setauthorstyle{sktd}{\sffamily \bfseries}
+		\setauthorstyle{skrw}{\sffamily}
+		\setauthorstyle{skdn}{\sffamily}
+	% コメントスタイルの設定
+		\setcommentstyle{\sffamily}
+	% 河合新用コマンドの作成
+		% ToDo		\sktodo{contents}
+			\newcommand{\sktodo}[1]{\comment[sktd]{ToDo: #1}}
+		% Review	\skreview{contents}
+			\newcommand{\skreview}[1]{\comment[skrw]{Review: #1}}
+		% Done		\skdone{contents}
+			\newcommand{\skdone}[1]{\comment[skdn]{Done: #1}}
+%%%% 本文開始 %%%%
+	\begin{document}
+		\maketitle % Title
+	%%%% Context %%%%
+		\input{00_Introduction.tex} % Introduction
+ 	%%%% References %%%%
+		\printbibliography
+\end{document}

@@ -1,0 +1,94 @@
+%%%% 古いコマンド等の警告 %%%%
+	\RequirePackage[l2tabu, orthodox]{nag}
+%%%% 基本的な設定 %%%%
+	\documentclass[a4paper]{bxjsarticle}
+	\usepackage[local, libertine, yuwin, final]{DigiconPreamble}
+	\usepackage{enumitem}
+	% Package and Commnad's Format Macro
+		\newcommand{\pkg}[1]{\textsf{#1}}
+		\newcommand{\cmd}[1]{\textsf{#1}}
+		\newcommand{\cmdop}[1]{$\langle$\textit{#1}$\rangle$}
+	% Title
+		\title{The \pkg{Digicon} Package}
+		\author{Shin Kawai}
+%%%% 以下のPeambleは内容によって編集すること %%%%
+	% 各種コマンドの定義・再定義
+	\makeatletter
+	%%%% しおり、リンク作成用 %%%%
+		% タイトル、著者、主題、キーワードを編集
+		\usepackage{ifpdf}
+		\usepackage{ifluatex}
+		\usepackage{ifxetex}
+		\ifpdf
+			\ifluatex
+			\usepackage[pdfencoding=auto]{hyperref}
+			\else
+			\usepackage[whole,autotilde]{bxcjkjatype}
+			\usepackage[unicode]{hyperref}
+			\fi
+		\else
+			\ifxetex
+			\usepackage{hyperref}
+			\else
+			\usepackage[dvipdfmx]{hyperref}
+			\usepackage{pxjahyper}
+			\fi
+		\fi
+		\hypersetup{%
+		bookmarksnumbered=true,%
+		colorlinks=false,%
+		setpagesize=false,%
+		pdftitle={\@title},%
+		pdfauthor={\@author},%
+		pdfsubject={Digicon Package Manual},%
+		pdfkeywords={Digicon; LaTeX; Macro;}}
+		%
+	%%%% onlyamsmathによるtikzとの競合を回避 %%%%
+		\let\@@tikzpicture\tikzpicture
+		\def\tikzpicture{\catcode`\$=3 \@@tikzpicture}
+		\global\let\tikz@ensure@dollar@catcode=\relax
+	\makeatother
+	% ヘッダーとフッターの拡張用
+		\usepackage{fancyhdr}
+		\pagestyle{fancy}
+		% ヘッダーとフッターの編集
+			\lhead{\rightmark}
+			\chead{}
+			\rhead{\leftmark}
+			\lfoot{}
+			\cfoot{-\ \textsf{\thepaged}\ -}
+			\rfoot{\textsf{コンパイル日時：\todayd}}
+			\renewcommand{\headrulewidth}{0pt}
+%%%% 本文開始 %%%%
+\begin{document}
+
+%%%% Title %%%%
+	\maketitle
+
+%%%% TOC %%%%
+	\tableofcontents
+
+%%%% DigiconPreamble.sty %%%%
+	\section{DigiconPreamble.sty}
+		\subsection{Introduction}
+			\begin{description}[style=nextline]
+				\item [Overview]
+					このパッケージは...
+				\item[Other Required Packages]
+					このパッケージは次のパッケージを必要とする.
+					\begin{itemize}
+						\item \pkg{xxx}
+					\end{itemize}
+				\item[Set Up and Options]
+					このパッケージは次のようにして読み込む.
+					\begin{quote}
+						\cmd{\textbackslash usepackage[\cmdop{local/sharelatex}, \cmdop{libertine/gyre}, \cmdop{yuwin/ipaex}, \cmdop{final/draft}]{DigiconPreamble}}
+					\end{quote}
+					各オプションの説明を次に与える.
+					下線の設定がデフォルトのオプションである.
+					\begin{description}[style=nextline]
+						\item[\cmd{\underline{local}/sharelatex}]
+					\end{description}
+			\end{description}
+			
+		\subsection{List of Commands}\end{document}

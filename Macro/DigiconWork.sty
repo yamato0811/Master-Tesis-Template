@@ -1,0 +1,50 @@
+% DigiconWork.sty % dcwk
+
+%%%% 執筆・確認、校正・作業記録用コマンド %%%%
+%%%% Identification %%%%
+	\ProvidesPackage{DigiconWork}[2016/11/15 作業記録用Macro]
+%%%% Options Declarations %%%%
+	% Create and Setting Logic Value for Switching Draft and Final
+		% draft :出力に含める
+		% final :コメントアウト(default)
+		\newif\if@dcwkdraft
+		\DeclareOption{draft}{\@dcwkdrafttrue}
+		\DeclareOption{final}{\@dcwkdraftfalse}
+		\ExecuteOptions{final}
+	\ProcessOptions\relax
+%%%% Package Main %%%%
+	% Loading commentig.sty
+		%%%% ShareLaTeX or Local %%%%
+			\if@dcpresharelatex
+        			\if@dcwkdraft
+        				\RequirePackage[draft]{Macro/commenting}
+	        		\else
+        				\RequirePackage[final]{Macro/commenting}
+        			\fi
+    			\else
+				\if@dcwkdraft
+        				\RequirePackage[draft]{commenting}
+        			\else
+        				\RequirePackage[final]{commenting}
+				\fi
+    			\fi
+	% To Do, Review, Doneのための著者(堀先生)を設定
+		\declareauthor{horitd}{Hori}{red}
+		\declareauthor{horirw}{Hori}{blue}
+		\declareauthor{horidn}{Hori}{gray}
+		\setauthorstyle{horitd}{\sffamily \bfseries}
+		\setauthorstyle{horirw}{\sffamily}
+		\setauthorstyle{horidn}{\sffamily}
+	% コメントスタイルの設定
+		\setcommentstyle{\sffamily}
+	% 堀先生用コマンドの作成
+		% ToDo
+			% \horitodo{contents}
+			\newcommand{\horitodo}[1]{\comment[horitd]{ToDo: #1}}
+		% Review
+			% \horireview{contents}
+			\newcommand{\horireview}[1]{\comment[horirw]{Review: #1}}
+		% Done
+			% \horidone{contents}
+			\newcommand{\horidone}[1]{\comment[horidn]{Done: #1}}
+\endinput

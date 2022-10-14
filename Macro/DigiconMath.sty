@@ -1,0 +1,658 @@
+% DigiconMath.sty
+
+%%%% My Mathematical Macros %%%%
+%%%% Identification %%%%
+	\ProvidesPackage{DigiconMath}[2016/11/07 Digital Control Laboratory Mathematical Macros]
+%%%% Preliminary Declarations %%%%
+	% Loading Packages
+		% For Math Commands
+			\let\openbox\relax
+			\RequirePackage{amsthm}
+			\RequirePackage{amsmath}
+			\RequirePackage[all, warning]{onlyamsmath}
+			\RequirePackage{nicefrac}
+			\RequirePackage{physics}
+			\RequirePackage{mathtools}
+		% For Upright Greek
+			\RequirePackage{upgreek}
+		% For Advanced Macros
+			\RequirePackage{xargs}[2008/03/08]
+			\RequirePackage{xparse}
+		% ラプラス・フーリエ変換の数式花文字用
+			\RequirePackage{mathrsfs}
+		% 書体の異なる筆記体用
+		\DeclareMathAlphabet{\mathpzc}{OT1}{pzc}{m}{it}
+%%%% Package Main %%%%
+	%%%% Allow Display-Math Line Break %%%%
+		\allowdisplaybreaks
+	%%%% Transformation %%%%
+		% Laplace Transform (Script L)
+			% \lpt
+			\newcommand{\lpt}{\mathscr{L}}
+		% Fourier Transform (Script F)
+			% \frt
+			\newcommand{\frt}{\mathscr{F}}
+	%%%% Combinations and Permutations %%%%
+		% Combinations
+			% \cmb{n}{m}
+			\newcommand{\cmb}[2]{{}_{#1}\mathrm{C}_{#2}}
+		% Permutations
+			% \prm{n}{m}
+			\newcommand{\prm}[2]{{}_{#1}\mathrm{P}_{#2}}
+	%%%% Real and Imaginary Part %%%%
+		% Real Part (Re)
+			% \re
+			\newcommand{\re}{\mathrm{Re}}
+		% Imaginary Part (Im)
+			% \im
+			\newcommand{\im}{\mathrm{Im}}
+	%%%% Operator Symbols etc. %%%%
+		% Transpose etc. (Roman and Capital T)
+			% \rct
+			\newcommand{\rct}{\mathrm{T}}
+		% ダイバージェント
+			% \dive
+			\newcommand{\dive}{\mathrm{div}}
+		% ロテート
+			% \rot
+			\newcommand{\rot}{\mathrm{rot}}
+		% differential operator
+			% \opdiff
+			\newcommand{\opdiff}{\bar{\mathcal{D}}}
+		% shift (q) operator
+			% \opq
+			\newcommand{\opq}{\mathpzc{q}}
+		% delta operator
+			% \opdelta
+			\newcommand{\opdelta}{\underline{\updelta}}
+			% \newcommand{\opdelta}{\updelta_{\mathrm{OP}}}
+		% z operator
+			% \opz
+			\newcommand{\opz}{\mathpzc{z}}
+		% Euler operator
+			% \ope
+			\newcommand{\ope}{\varepsilon}
+	%%%% Vector %%%%
+		% (Discrete-Time) Vector (Bold Italic)
+			% \bi{x}
+			\newcommand{\bi}[1]{\boldsymbol{#1}}
+		% Continuous-Time Vector (上バー付きボールドイタリック)
+			% \cv{x}
+			\newcommand{\cv}[1]{\bar{\bi{#1}}}
+	%%%% Matrix %%%%
+		%%%% Matrix For Continuous-Time System %%%%
+			\newcommand{\cA}{\bar{A}}
+			\newcommand{\cB}{\bar{B}}
+			\newcommand{\cC}{\bar{C}}
+			\newcommand{\cD}{\bar{D}}
+			\newcommand{\cE}{\bar{E}}
+			\newcommand{\cF}{\bar{F}}
+			\newcommand{\cG}{\bar{G}}
+			\newcommand{\cH}{\bar{H}}
+			\newcommand{\cI}{\bar{I}}
+			\newcommand{\cJ}{\bar{J}}
+			\newcommand{\cK}{\bar{K}}
+			\newcommand{\cL}{\bar{L}}
+			\newcommand{\cM}{\bar{M}}
+			\newcommand{\cN}{\bar{N}}
+			\newcommand{\cO}{\bar{O}}
+			\newcommand{\cP}{\bar{P}}
+			\newcommand{\cQ}{\bar{Q}}
+			\newcommand{\cR}{\bar{R}}
+			\newcommand{\cS}{\bar{S}}
+			\newcommand{\cT}{\bar{T}}
+			\newcommand{\cU}{\bar{U}}
+			\newcommand{\cV}{\bar{V}}
+			\newcommand{\cW}{\bar{W}}
+			\newcommand{\cX}{\bar{X}}
+			\newcommand{\cY}{\bar{Y}}
+			\newcommand{\cZ}{\bar{Z}}
+		%%%% Matrix for (Discrete-Time) Descriptor System %%%%
+			\newcommand{\Ads}{\mathpzc{A}}
+			\newcommand{\Bds}{\mathpzc{B}}
+			\newcommand{\Cds}{\mathpzc{C}}
+			\newcommand{\Dds}{\mathpzc{D}}
+			\newcommand{\Eds}{\mathpzc{E}}
+			\newcommand{\Nds}{\mathpzc{N}}
+			\newcommand{\Sds}{\mathpzc{S}}
+		%%%% Matrix for Continuous-Time Descriptor System %%%%
+			\newcommand{\cAds}{\bar{\Ads}}
+			\newcommand{\cBds}{\bar{\Bds}}
+			\newcommand{\cCds}{\bar{\Cds}}
+			\newcommand{\cDds}{\bar{\Dds}}
+			\newcommand{\cEds}{\bar{\Eds}}
+			\newcommand{\cNds}{\bar{\Nds}}
+			\newcommand{\cSds}{\bar{\Sds}}
+	%%%% 各種省略記号とその組み合わせ用 %%%%
+		% Continuous-Time System
+			\newcommand{\ct}{\mathrm{CT}}
+		% Discrete-Time System
+			\newcommand{\dt}{\mathrm{DT}}
+		% State-Space Form
+			\newcommand{\ssf}{\mathrm{SS}}
+		% Descriptor (System) Form
+			\newcommand{\df}{\mathrm{DS}}
+		% Exact Discrete-time Model
+			\newcommand{\edm}{\mathrm{EM}}
+		% Mapping Discrete-time Model
+			\newcommand{\mdm}{\mathrm{MM}}
+		% Slow SubSystem
+			\newcommand{\sss}{\mathrm{s}}
+		% Fast SubSystem
+			\newcommand{\fss}{\mathrm{f}}
+	%%%% Dimensions for Descriptor System %%%%
+		\newcommand{\nds}{\mathpzc{n}}
+		\newcommand{\rds}{\mathpzc{r}}
+		\newcommand{\dds}{\mathpzc{d}}
+		\newcommand{\hds}{\mathpzc{h}}
+	%%%% Continuous-Time Transfer Function %%%%
+		% 連続系の伝達関数
+			% \tf{x}(上付き)<下付き>[s]
+			\NewDocumentCommand\tf{m d() d<> O{s}}{%
+			\bar{#1}\IfValueT{#2}{^{#2}}\IfValueT{#3}{_{#3}}%
+			\left( #4 \right)
+			}
+		% 連続系の伝達関数 A
+			% \tfa(上付き)<下付き>[s]
+			\NewDocumentCommand\tfa{d() d<> O{s}}{%
+			\tf{A}(#1)<#2>[#3]
+			}
+		% 連続系の伝達関数 B
+			% \tfb(上付き)<下付き>[s]
+			\NewDocumentCommand\tfb{d() d<> O{s}}{%
+			\tf{B}(#1)<#2>[#3]
+			}
+		% 連続系の伝達関数 C
+			% \tfc(上付き)<下付き>[s]
+			\NewDocumentCommand\tfc{d() d<> O{s}}{%
+			\tf{C}(#1)<#2>[#3]
+			}
+		% 連続系の伝達関数 G
+			% \tfg(上付き)<下付き>[s]
+			\NewDocumentCommand\tfg{d() d<> O{s}}{%
+			\tf{G}(#1)<#2>[#3]
+			}
+		% 連続系の伝達関数 H
+			% \tfh(上付き)<下付き>[s]
+			\NewDocumentCommand\tfh{d() d<> O{s}}{%
+			\tf{H}(#1)<#2>[#3]
+			}
+		% 連続系の伝達関数 M
+			% \tfm(上付き)<下付き>[s]
+			\NewDocumentCommand\tfm{d() d<> O{s}}{%
+			\tf{M}(#1)<#2>[#3]
+			}
+		% 連続系の伝達関数 P
+			% \tfp(上付き)<下付き>[s]
+			\NewDocumentCommand\tfp{d() d<> O{s}}{%
+			\tf{P}(#1)<#2>[#3]
+			}
+		% 連続系の伝達関数 T
+			% \tft(上付き)<下付き>[s]
+			\NewDocumentCommand\tft{d() d<> O{s}}{%
+			\tf{T}(#1)<#2>[#3]
+			}
+	%%%% Discrete-Time Transfer Function (z operator) %%%%
+		% z演算子の伝達関数
+			% \ztf{x}(上付き)<下付き>[\opz]
+			\NewDocumentCommand\ztf{m d() d<> O{\opz}}{%
+			#1\IfValueT{#2}{^{#2}}\IfValueT{#3}{_{#3}}%
+			\left( #4 \right)
+			}
+		% z演算子の伝達関数 A
+			% \ztfa(上付き)<下付き>[\opz]
+			\NewDocumentCommand\ztfa{d() d<> O{\opz}}{%
+			\ztf{A}(#1)<#2>[#3]
+			}
+		% z演算子の伝達関数 B
+			% \ztfb(上付き)<下付き>[\opz]
+			\NewDocumentCommand\ztfb{d() d<> O{\opz}}{%
+			\ztf{B}(#1)<#2>[#3]
+			}
+		% z演算子の伝達関数 C
+			% \ztfc(上付き)<下付き>[\opz]
+			\NewDocumentCommand\ztfc{d() d<> O{\opz}}{%
+			\ztf{C}(#1)<#2>[#3]
+			}
+		% z演算子の伝達関数 G
+			% \ztfg(上付き)<下付き>[\opz]
+			\NewDocumentCommand\ztfg{d() d<> O{\opz}}{%
+			\ztf{G}(#1)<#2>[#3]
+			}
+		% z演算子の伝達関数 H
+			% \ztfh(上付き)<下付き>[\opz]
+			\NewDocumentCommand\ztfh{d() d<> O{\opz}}{%
+			\ztf{H}(#1)<#2>[#3]
+			}
+		% z演算子の伝達関数 M
+			% \ztfm(上付き)<下付き>[\opz]
+			\NewDocumentCommand\ztfm{d() d<> O{\opz}}{%
+			\ztf{M}(#1)<#2>[#3]
+			}
+		% z演算子の伝達関数 P
+			% \ztfp(上付き)<下付き>[\opz]
+			\NewDocumentCommand\ztfp{d() d<> O{\opz}}{%
+			\ztf{P}(#1)<#2>[#3]
+			}
+		% z演算子の伝達関数 T
+			% \ztft(上付き)<下付き>[\opz]
+			\NewDocumentCommand\ztft{d() d<> O{\opz}}{%
+			\ztf{T}(#1)<#2>[#3]
+			}
+	%%%% Discrete-Time Transfer Function (epsilon operator) %%%%
+		% ep 演算子の伝達関数
+			% \etf{x}(上付き)<下付き>[\ope]
+			\NewDocumentCommand\etf{m d() d<> O{\ope}}{%
+			#1\IfValueT{#2}{^{#2}}\IfValueT{#3}{_{#3}}%
+			\left( #4 \right)
+			}
+		% ep 演算子の伝達関数 A
+			% \etfa(上付き)<下付き>[\ope]
+			\NewDocumentCommand\etfa{d() d<> O{\ope}}{%
+			\etf{A}(#1)<#2>[#3]
+			}
+		% ep 演算子の伝達関数 B
+			% \etfb(上付き)<下付き>[\ope]
+			\NewDocumentCommand\etfb{d() d<> O{\ope}}{%
+			\etf{B}(#1)<#2>[#3]
+			}
+		% ep 演算子の伝達関数 C
+			% \etfc(上付き)<下付き>[\ope]
+			\NewDocumentCommand\etfc{d() d<> O{\ope}}{%
+			\etf{C}(#1)<#2>[#3]
+			}
+		% ep 演算子の伝達関数 G
+			% \etfg(上付き)<下付き>[\ope]
+			\NewDocumentCommand\etfg{d() d<> O{\ope}}{%
+			\etf{G}(#1)<#2>[#3]
+			}
+		% ep 演算子の伝達関数 H
+			% \etfh(上付き)<下付き>[\ope]
+			\NewDocumentCommand\etfh{d() d<> O{\ope}}{%
+			\etf{H}(#1)<#2>[#3]
+			}
+		% ep 演算子の伝達関数 M
+			% \etfm(上付き)<下付き>[\ope]
+			\NewDocumentCommand\etfm{d() d<> O{\ope}}{%
+			\etf{M}(#1)<#2>[#3]
+			}
+		% ep 演算子の伝達関数 P
+			% \etfp(上付き)<下付き>[\ope]
+			\NewDocumentCommand\etfp{d() d<> O{\ope}}{%
+			\etf{P}(#1)<#2>[#3]
+			}
+		% ep 演算子の伝達関数 T
+			% \etft(上付き)<下付き>[\ope]
+			\NewDocumentCommand\etft{d() d<> O{\ope}}{%
+			\etf{T}(#1)<#2>[#3]
+			}
+	%%%% 大きさが中身に合う括弧の挿入 %%%
+		% \mybr[(]{t}[)]
+		\NewDocumentCommand\mybr{O{(} m O{)}}{\left#1 #2 \right#3}
+	%%%% Continuous-Time Scalar Variable %%%%
+		% 連続系のスカラー変数
+			% \csv{x}(上付き)<下付き>[t]
+			% \csv*{x}(上付き)<下付き>
+			\NewDocumentCommand\csv{s m d() d<> O{t}}{%
+			\bar{#2}\IfValueT{#3}{^{#3}}\IfValueT{#4}{_{#4}}%
+			\IfBooleanF{#1}{\left( #5 \right)}
+			}
+		% 連続系のスカラーe
+			% \cse(上付き)<下付き>[t]
+			% \cse*(上付き)<下付き>
+			\NewDocumentCommand\cse{s d() d<> O{t}}{%
+			\IfBooleanTF{#1}{\csv*{e}(#2)<#3>[#4]}{\csv{e}(#2)<#3>[#4]}
+			}
+		% 連続系のスカラーf
+			% \csf(上付き)<下付き>[t]
+			% \csf*(上付き)<下付き>
+			\NewDocumentCommand\csf{s d() d<> O{t}}{%
+			\IfBooleanTF{#1}{\csv*{f}(#2)<#3>[#4]}{\csv{f}(#2)<#3>[#4]}
+			}
+		% 連続系のスカラーr
+			% \csr(上付き)<下付き>[t]
+			% \csr*(上付き)<下付き>
+			\NewDocumentCommand\csr{s d() d<> O{t}}{%
+			\IfBooleanTF{#1}{\csv*{r}(#2)<#3>[#4]}{\csv{r}(#2)<#3>[#4]}
+			}
+		% 連続系のスカラーu
+			% \csu(上付き)<下付き>[t]
+			% \csu*(上付き)<下付き>
+			\NewDocumentCommand\csu{s d() d<> O{t}}{%
+			\IfBooleanTF{#1}{\csv*{u}(#2)<#3>[#4]}{\csv{u}(#2)<#3>[#4]}
+			}
+		% 連続系のスカラーx
+			% \csx(上付き)<下付き>[t]
+			% \csx*(上付き)<下付き>
+			\NewDocumentCommand\csx{s d() d<> O{t}}{%
+			\IfBooleanTF{#1}{\csv*{x}(#2)<#3>[#4]}{\csv{x}(#2)<#3>[#4]}
+			}
+		% 連続系のスカラーy
+			% \csy(上付き)<下付き>[t]
+			% \csy*(上付き)<下付き>
+			\NewDocumentCommand\csy{s d() d<> O{t}}{%
+			\IfBooleanTF{#1}{\csv*{y}(#2)<#3>[#4]}{\csv{y}(#2)<#3>[#4]}
+			}
+		% 連続系のスカラーz
+			% \csz(上付き)<下付き>[t]
+			% \csz*(上付き)<下付き>
+			\NewDocumentCommand\csz{s d() d<> O{t}}{%
+			\IfBooleanTF{#1}{\csv*{z}(#2)<#3>[#4]}{\csv{z}(#2)<#3>[#4]}
+			}
+	%%%% Continuous-Time Vector Variables %%%%
+		% 連続系のベクトル変数
+			% \cvv{x}(上付き)<下付き>[t]
+			% \cvv*{x}(上付き)<下付き>
+			\NewDocumentCommand\cvv{s m d() d<> O{t}}{%
+			\cv{#2}\IfValueT{#3}{^{#3}}\IfValueT{#4}{_{#4}}%
+			\IfBooleanF{#1}{\left( #5 \right)}
+			}
+		% 連続系のベクトルe
+			% \cve(上付き)<下付き>[t]
+			% \cve*(上付き)<下付き>
+			\NewDocumentCommand\cve{s d() d<> O{t}}{%
+			\IfBooleanTF{#1}{\cvv*{e}(#2)<#3>[#4]}{\cvv{e}(#2)<#3>[#4]}
+			}
+		% 連続系のベクトルf
+			% \cvf(上付き)<下付き>[t]
+			% \cvf*(上付き)<下付き>
+			\NewDocumentCommand\cvf{s d() d<> O{t}}{%
+			\IfBooleanTF{#1}{\cvv*{f}(#2)<#3>[#4]}{\cvv{f}(#2)<#3>[#4]}
+			}
+		% 連続系のベクトルr
+			% \cvr(上付き)<下付き>[t]
+			% \cvr*(上付き)<下付き>
+			\NewDocumentCommand\cvr{s d() d<> O{t}}{%
+			\IfBooleanTF{#1}{\cvv*{r}(#2)<#3>[#4]}{\cvv{r}(#2)<#3>[#4]}
+			}
+		% 連続系のベクトルu
+			% \cvu(上付き)<下付き>[t]
+			% \cvu*(上付き)<下付き>
+			\NewDocumentCommand\cvu{s d() d<> O{t}}{%
+			\IfBooleanTF{#1}{\cvv*{u}(#2)<#3>[#4]}{\cvv{u}(#2)<#3>[#4]}
+			}
+		% 連続系のベクトルx
+			% \cvx(上付き)<下付き>[t]
+			% \cvx*(上付き)<下付き>
+			\NewDocumentCommand\cvx{s d() d<> O{t}}{%
+			\IfBooleanTF{#1}{\cvv*{x}(#2)<#3>[#4]}{\cvv{x}(#2)<#3>[#4]}
+			}
+		% 連続系のベクトルy
+			% \cvy(上付き)<下付き>[t]
+			% \cvy*(上付き)<下付き>
+			\NewDocumentCommand\cvy{s d() d<> O{t}}{%
+			\IfBooleanTF{#1}{\cvv*{y}(#2)<#3>[#4]}{\cvv{y}(#2)<#3>[#4]}
+			}
+		% 連続系のベクトルz
+			% \cvz(上付き)<下付き>[t]
+			% \cvz*(上付き)<下付き>
+			\NewDocumentCommand\cvz{s d() d<> O{t}}{%
+			\IfBooleanTF{#1}{\cvv*{z}(#2)<#3>[#4]}{\cvv{z}(#2)<#3>[#4]}
+			}
+	%%%% Discrete-Time Scalar Variables %%%%
+		% 離散系のスカラー変数
+			% \dsv{x}(上付き)<下付き>[k][T]
+			% \dsv*{x}(上付き)<下付き>[k]
+			\NewDocumentCommand\dsv{s m d() d<> O{k} O{T}}{%
+			#2\IfValueT{#3}{^{#3}}%
+			\IfValueTF{#4}{%
+			\IfBooleanTF{#1}{%
+			_{#4, #5}
+			}{%
+			_{#4}
+			}
+			}{%
+			\IfBooleanT{#1}{%
+			_{#5}
+			}
+			}%
+			\IfBooleanF{#1}{\left( #5, #6 \right)}
+			}
+		% 離散系のスカラーe
+			% \dse(上付き)<下付き>[k][T]
+			% \dse*(上付き)<下付き>[k]
+			\NewDocumentCommand\dse{s d() d<> O{k} O{T}}{%
+			\IfBooleanTF{#1}{\dsv*{e}(#2)<#3>[#4][#5]}{\dsv{e}(#2)<#3>[#4][#5]}
+			}
+		% 離散系のスカラーf
+			% \dsf(上付き)<下付き>[k][T]
+			% \dsf*(上付き)<下付き>[k]
+			\NewDocumentCommand\dsf{s d() d<> O{k} O{T}}{%
+			\IfBooleanTF{#1}{\dsv*{f}(#2)<#3>[#4][#5]}{\dsv{f}(#2)<#3>[#4][#5]}
+			}
+		% 離散系のスカラーr
+			% \dsr(上付き)<下付き>[k][T]
+			% \dsr*(上付き)<下付き>[k]
+			\NewDocumentCommand\dsr{s d() d<> O{k} O{T}}{%
+			\IfBooleanTF{#1}{\dsv*{r}(#2)<#3>[#4][#5]}{\dsv{r}(#2)<#3>[#4][#5]}
+			}
+		% 離散系のスカラーu
+			% \dsu(上付き)<下付き>[k][T]
+			% \dsu*(上付き)<下付き>[k]
+			\NewDocumentCommand\dsu{s d() d<> O{k} O{T}}{%
+			\IfBooleanTF{#1}{\dsv*{u}(#2)<#3>[#4][#5]}{\dsv{u}(#2)<#3>[#4][#5]}
+			}
+		% 離散系のスカラーv
+			% \dtsv(上付き)<下付き>[k][T]
+			% \dtsv*(上付き)<下付き>[k]
+			\NewDocumentCommand\dtsv{s d() d<> O{k} O{T}}{%
+			\IfBooleanTF{#1}{\dsv*{v}(#2)<#3>[#4][#5]}{\dsv{v}(#2)<#3>[#4][#5]}
+			}
+		% 離散系のスカラーw
+			% \dsw(上付き)<下付き>[k][T]
+			% \dwsw*(上付き)<下付き>[k]
+			\NewDocumentCommand\dsw{s d() d<> O{k} O{T}}{%
+			\IfBooleanTF{#1}{\dsv*{w}(#2)<#3>[#4][#5]}{\dsv{w}(#2)<#3>[#4][#5]}
+			}
+		% 離散系のスカラーx
+			% \dsx(上付き)<下付き>[k][T]
+			% \dsx*(上付き)<下付き>[k]
+			\NewDocumentCommand\dsx{s d() d<> O{k} O{T}}{%
+			\IfBooleanTF{#1}{\dsv*{x}(#2)<#3>[#4][#5]}{\dsv{x}(#2)<#3>[#4][#5]}
+			}
+		% 離散系のスカラーy
+			% \dsy(上付き)<下付き>[k][T]
+			% \dsy*(上付き)<下付き>[k]
+			\NewDocumentCommand\dsy{s d() d<> O{k} O{T}}{%
+			\IfBooleanTF{#1}{\dsv*{y}(#2)<#3>[#4][#5]}{\dsv{y}(#2)<#3>[#4][#5]}
+			}
+	%%%% Discrete-Time Vector Variables %%%%
+		% 離散系のベクトル変数
+			% \dvv{x}(上付き)<下付き>[k][T]
+			% \dvv*{x}(上付き)<下付き>[k]
+			\NewDocumentCommand\dvv{s m d() d<> O{k} O{T}}{%
+			\bi{#2}\IfValueT{#3}{^{#3}}%
+			\IfValueTF{#4}{%
+			\IfBooleanTF{#1}{%
+			_{#4, #5}
+			}{%
+			_{#4}
+			}
+			}{%
+			\IfBooleanT{#1}{%
+			_{#5}
+			}
+			}%
+			\IfBooleanF{#1}{\left( #5, #6 \right)}
+			}
+		% 離散系のベクトルe
+			% \dve(上付き)<下付き>[k][T]
+			% \dve*(上付き)<下付き>[k]
+			\NewDocumentCommand\dve{s d() d<> O{k} O{T}}{%
+			\IfBooleanTF{#1}{\dvv*{e}(#2)<#3>[#4][#5]}{\dvv{e}(#2)<#3>[#4][#5]}
+			}
+		% 離散系のベクトルf
+			% \dvf(上付き)<下付き>[k][T]
+			% \dvf*(上付き)<下付き>[k]
+			\NewDocumentCommand\dvf{s d() d<> O{k} O{T}}{%
+			\IfBooleanTF{#1}{\dvv*{f}(#2)<#3>[#4][#5]}{\dvv{f}(#2)<#3>[#4][#5]}
+			}
+		% 離散系のベクトルr
+			% \dvr(上付き)<下付き>[k][T]
+			% \dvr*(上付き)<下付き>[k]
+			\NewDocumentCommand\dvr{s d() d<> O{k} O{T}}{%
+			\IfBooleanTF{#1}{\dvv*{r}(#2)<#3>[#4][#5]}{\dvv{r}(#2)<#3>[#4][#5]}
+			}
+		% 離散系のベクトルu
+			% \dvu(上付き)<下付き>[k][T]
+			% \dvu*(上付き)<下付き>[k]
+			\NewDocumentCommand\dvu{s d() d<> O{k} O{T}}{%
+			\IfBooleanTF{#1}{\dvv*{u}(#2)<#3>[#4][#5]}{\dvv{u}(#2)<#3>[#4][#5]}
+			}
+		% 離散系のベクトルv
+			% \dtvv(上付き)<下付き>[k][T]
+			% \dtvv*(上付き)<下付き>[k]
+			\NewDocumentCommand\dtvv{s d() d<> O{k} O{T}}{%
+			\IfBooleanTF{#1}{\dvv*{v}(#2)<#3>[#4][#5]}{\dvv{v}(#2)<#3>[#4][#5]}
+			}
+		% 離散系のベクトルw
+			% \dvw(上付き)<下付き>[k][T]
+			% \dvw*(上付き)<下付き>[k]
+			\NewDocumentCommand\dvw{s d() d<> O{k} O{T}}{%
+			\IfBooleanTF{#1}{\dvv*{w}(#2)<#3>[#4][#5]}{\dvv{w}(#2)<#3>[#4][#5]}
+			}
+		% 離散系のベクトルx
+			% \dvx(上付き)<下付き>[k][T]
+			% \dvx*(上付き)<下付き>[k]
+			\NewDocumentCommand\dvx{s d() d<> O{k} O{T}}{%
+			\IfBooleanTF{#1}{\dvv*{x}(#2)<#3>[#4][#5]}{\dvv{x}(#2)<#3>[#4][#5]}
+			}
+		% 離散系のベクトルy
+			% \dvy(上付き)<下付き>[k][T]
+			% \dvy*(上付き)<下付き>[k]
+			\NewDocumentCommand\dvy{s d() d<> O{k} O{T}}{%
+			\IfBooleanTF{#1}{\dvv*{y}(#2)<#3>[#4][#5]}{\dvv{y}(#2)<#3>[#4][#5]}
+			}
+	%%%% dotのつく変数 %%%%
+		% d+\command
+		%%%% 連続時間スカラー変数 %%%%
+			% 連続系のスカラー変数
+				% \dcsv{x}(上付き)<下付き>[t]
+				% \dcsv*{x}(上付き)<下付き>
+				\NewDocumentCommand\dcsv{s m d() d<> O{t}}{%
+				\dot{\bar{#2}}\IfValueT{#3}{^{#3}}\IfValueT{#4}{_{#4}}%
+				\IfBooleanF{#1}{\left( #5 \right)}
+				}
+			% 連続系のスカラー\dot{r}
+				% \dcsr(上付き)<下付き>[t]
+				% \dcsr*(上付き)<下付き>
+				\NewDocumentCommand\dcsr{s d() d<> O{t}}{%
+				\IfBooleanTF{#1}{\dcsv*{r}(#2)<#3>[#4]}{\dcsv{r}(#2)<#3>[#4]}
+				}
+			% 連続系のスカラー\dot{u}
+				% \dcsu(上付き)<下付き>[t]
+				% \dcsu*(上付き)<下付き>
+				\NewDocumentCommand\dcsu{s d() d<> O{t}}{%
+				\IfBooleanTF{#1}{\dcsv*{u}(#2)<#3>[#4]}{\dcsv{u}(#2)<#3>[#4]}
+				}
+			% 連続系のスカラー\dot{x}
+				% \dcsx(上付き)<下付き>[t]
+				% \dcsx*(上付き)<下付き>
+				\NewDocumentCommand\dcsx{s d() d<> O{t}}{%
+				\IfBooleanTF{#1}{\dcsv*{x}(#2)<#3>[#4]}{\dcsv{x}(#2)<#3>[#4]}
+				}
+			% 連続系のスカラー\dot{y}
+				% \dcsy(上付き)<下付き>[t]
+				% \dcsy*(上付き)<下付き>
+				\NewDocumentCommand\dcsy{s d() d<> O{t}}{%
+				\IfBooleanTF{#1}{\dcsv*{y}(#2)<#3>[#4]}{\dcsv{y}(#2)<#3>[#4]}
+				}
+		%%%% 連続時間ベクトル変数 %%%%
+			% 連続系のベクトル変数
+				% \dcvv{x}(上付き)<下付き>[t]
+				% \dcvv*{x}(上付き)<下付き>
+				\NewDocumentCommand\dcvv{s m d() d<> O{t}}{%
+				\dot{\cv{#2}}\IfValueT{#3}{^{#3}}\IfValueT{#4}{_{#4}}%
+				\IfBooleanF{#1}{\left( #5 \right)}
+				}
+			% 連続系のベクトル\dot{r}
+				% \dcvr(上付き)<下付き>[t]
+				% \dcvr*(上付き)<下付き>
+				\NewDocumentCommand\dcvr{s d() d<> O{t}}{%
+				\IfBooleanTF{#1}{\dcvv*{r}(#2)<#3>[#4]}{\dcvv{r}(#2)<#3>[#4]}
+				}
+			% 連続系のベクトル\dot{u}
+				% \dcvu(上付き)<下付き>[t]
+				% \dcvu*(上付き)<下付き>
+				\NewDocumentCommand\dcvu{s d() d<> O{t}}{%
+				\IfBooleanTF{#1}{\dcvv*{u}(#2)<#3>[#4]}{\dcvv{u}(#2)<#3>[#4]}
+				}
+			% 連続系のベクトル\dot{x}
+				% \dcvx(上付き)<下付き>[t]
+				% \dcvx*(上付き)<下付き>
+				\NewDocumentCommand\dcvx{s d() d<> O{t}}{%
+				\IfBooleanTF{#1}{\dcvv*{x}(#2)<#3>[#4]}{\dcvv{x}(#2)<#3>[#4]}
+				}
+			% 連続系のベクトル\dot{y}
+				% \dcvy(上付き)<下付き>[t]
+				% \dcvy*(上付き)<下付き>
+				\NewDocumentCommand\dcvy{s d() d<> O{t}}{%
+				\IfBooleanTF{#1}{\dcvv*{y}(#2)<#3>[#4]}{\dcvv{y}(#2)<#3>[#4]}
+				}
+	%%%% ddotのつく変数 %%%%
+		% dd+\command
+		%%%% 連続時間スカラー変数 %%%%
+			% 連続系のスカラー変数
+				% \ddcsv{x}(上付き)<下付き>[t]
+				% \ddcsv*{x}(上付き)<下付き>
+				\NewDocumentCommand\ddcsv{s m d() d<> O{t}}{%
+				\ddot{\bar{#2}}\IfValueT{#3}{^{#3}}\IfValueT{#4}{_{#4}}%
+				\IfBooleanF{#1}{\left( #5 \right)}
+				}
+			% 連続系のスカラー\ddot{x}
+				% \ddcsx(上付き)<下付き>[t]
+				% \ddcsx*(上付き)<下付き>
+				\NewDocumentCommand\ddcsx{s d() d<> O{t}}{%
+				\IfBooleanTF{#1}{\ddcsv*{x}(#2)<#3>[#4]}{\ddcsv{x}(#2)<#3>[#4]}
+				}
+			% 連続系のスカラー\ddot{y}
+				% \ddcsy(上付き)<下付き>[t]
+				% \ddcsy*(上付き)<下付き>
+				\NewDocumentCommand\ddcsy{s d() d<> O{t}}{%
+				\IfBooleanTF{#1}{\ddcsv*{y}(#2)<#3>[#4]}{\ddcsv{y}(#2)<#3>[#4]}
+				}
+			% 連続系のスカラー\ddot{u}
+				% \ddcsu(上付き)<下付き>[t]
+				% \ddcsu*(上付き)<下付き>
+				\NewDocumentCommand\ddcsu{s d() d<> O{t}}{%
+				\IfBooleanTF{#1}{\ddcsv*{u}(#2)<#3>[#4]}{\ddcsv{u}(#2)<#3>[#4]}
+				}
+			% 連続系のスカラー\ddot{r}
+				% \ddcsr(上付き)<下付き>[t]
+				% \ddcsr*(上付き)<下付き>
+				\NewDocumentCommand\ddcsr{s d() d<> O{t}}{%
+				\IfBooleanTF{#1}{\ddcsv*{r}(#2)<#3>[#4]}{\ddcsv{r}(#2)<#3>[#4]}
+				}
+		%%%% 連続時間ベクトル変数 %%%%
+			% 連続系のベクトル変数
+				% \ddcvv{x}(上付き)<下付き>[t]
+				% \ddcvv*{x}(上付き)<下付き>
+				\NewDocumentCommand\ddcvv{s m d() d<> O{t}}{%
+				\ddot{\cv{#2}}\IfValueT{#3}{^{#3}}\IfValueT{#4}{_{#4}}%
+				\IfBooleanF{#1}{\left( #5 \right)}
+				}
+			% 連続系のベクトル\ddot{x}
+				% \ddcvx(上付き)<下付き>[t]
+				% \ddcvx*(上付き)<下付き>
+				\NewDocumentCommand\ddcvx{s d() d<> O{t}}{%
+				\IfBooleanTF{#1}{\ddcvv*{x}(#2)<#3>[#4]}{\ddcvv{x}(#2)<#3>[#4]}
+				}
+			% 連続系のベクトル\ddot{y}
+				% \ddcvy(上付き)<下付き>[t]
+				% \ddcvy*(上付き)<下付き>
+				\NewDocumentCommand\ddcvy{s d() d<> O{t}}{%
+				\IfBooleanTF{#1}{\ddcvv*{y}(#2)<#3>[#4]}{\ddcvv{y}(#2)<#3>[#4]}
+				}
+			% 連続系のベクトル\ddot{u}
+				% \ddcvu(上付き)<下付き>[t]
+				% \ddcvu*(上付き)<下付き>
+				\NewDocumentCommand\ddcvu{s d() d<> O{t}}{%
+				\IfBooleanTF{#1}{\ddcvv*{u}(#2)<#3>[#4]}{\ddcvv{u}(#2)<#3>[#4]}
+				}
+			% 連続系のベクトル\ddot{r}
+				% \ddcvr(上付き)<下付き>[t]
+				% \ddcvr*(上付き)<下付き>
+				\NewDocumentCommand\ddcvr{s d() d<> O{t}}{%
+				\IfBooleanTF{#1}{\ddcvv*{r}(#2)<#3>[#4]}{\ddcvv{r}(#2)<#3>[#4]}
+				}
+\endinput

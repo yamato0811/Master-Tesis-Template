@@ -1,0 +1,135 @@
+% DigiconPreamble.sty % dcpre
+
+%%%% Digital Control Laboratory Preamble Macro for XeTeX %%%%
+	% Options
+	% [sharelatex], local: Setting Fonts for ShareLaTeX or Local
+	% libertine, [gyre]: Setting European Fonts Linux Libertine or TeX Gyre with Local Option
+	% yuwin, [ipaex]: Setting Japanese Fonts Yu Font or IPAex Font with Local Option
+	% final, [draft]: Setting final mode or draft mode
+%%%% Identification %%%%
+	\ProvidesPackage{DigiconPreamble}[2016/11/15 Digital Control Laboratory Preamble Macro for XeTeX]
+%%%% Preliminary Declarations %%%%
+	% Loading Packages
+		% Forcing Figs. and Tables Output
+			\RequirePackage{float}
+		% Type SI Unit
+			\RequirePackage{siunitx}
+%%%% Options Declarations %%%%
+	% Create and Setting Logic Value for ShareLaTeX
+		\newif\if@dcpresharelatex
+		\DeclareOption{sharelatex}{\@dcpresharelatextrue}
+		\DeclareOption{local}{\@dcpresharelatexfalse}
+		\ExecuteOptions{local}
+	% Create and Setting Logic Value for Choosing Font
+		\newif\if@dcprelib
+		\newif\if@dcpreyuwin
+		% Linux Libertine or Tex Gyre
+			\DeclareOption{libertine}{\@dcprelibtrue}
+			\DeclareOption{gyre}{\@dcprelibfalse}
+			\ExecuteOptions{libertine}
+		% Yu win or IPAex
+			\DeclareOption{yuwin}{\@dcpreyuwintrue}
+			\DeclareOption{ipaex}{\@dcpreyuwinfalse}
+			\ExecuteOptions{yuwin}
+	% Create and Setting Logic Value for Choosing Draft or Final
+		\newif\if@dcpredraft
+		\DeclareOption{draft}{\@dcpredrafttrue}
+		\DeclareOption{final}{\@dcpredraftfalse}
+		\ExecuteOptions{final}
+	\ProcessOptions\relax
+%%%% Package Main %%%%
+	% For Font Setting
+		\RequirePackage{zxjatype}
+		%%%% ShareLaTeX or Local %%%%
+			\if@dcpresharelatex
+				% European Font > Linux Libertine, Biolinum, TeX Gyre Cursor
+				% Japanese Font > IPAex Mincho, Gothic
+				%%%% European Language Font Setting %%%%
+					% Linux Libertine
+						\setromanfont[
+						Scale=MatchLowercase,
+						Ligatures=TeX
+						]{Linux Libertine O}
+					% Linux Biolinum
+						\setsansfont[
+						Scale=MatchLowercase,
+						Ligatures=TeX
+						]{Linux Biolinum O}
+					% TeX Gyre Cursor
+						\setmonofont[
+						Scale=0.90,
+						Scale=MatchLowercase
+						]{Linux Libertine Mono O}
+				%%%% Japanese Font Setting %%%%
+					\setjamainfont{Noto Serif CJK JP}
+					\setjasansfont{Noto Sans CJK JP}
+					\setjamonofont{Noto Sans Mono CJK JP}
+			\else
+				%lib and yuwin determine fonts
+				%%%% European Language Font Setting %%%%
+					\if@dcprelib
+						% Linux Libertine
+							\setromanfont[
+							Scale=MatchLowercase,
+							Ligatures=TeX
+							]{Linux Libertine O}
+						% Linux Biolinum
+							\setsansfont[
+							Scale=MatchLowercase,
+							Ligatures=TeX
+							]{Linux Biolinum O}
+					\else
+						% TeX Gyre Termes
+							\setromanfont[
+							Scale=MatchLowercase,
+							Ligatures=TeX
+							]{TeX Gyre Termes}
+						% TeX Gyre Heros
+							\setsansfont[
+							Scale=MatchLowercase,
+							Ligatures=TeX
+							]{TeX Gyre Heros}
+					\fi
+					% TeX Gyre Cursor
+						\setmonofont[
+						Scale=0.90,
+						Scale=MatchLowercase
+						]{TeX Gyre Cursor}
+				%%%% Japanese Font Setting %%%%
+					\if@dcpreyuwin
+						\setjamainfont{游明朝}
+						\setjasansfont{游ゴシック}
+						\setjamonofont{Yu Gothic UI}
+					\else
+						\setjamainfont{IPAexMincho}
+						\setjasansfont{IPAexGothic}
+						\setjamonofont{IPAGothic}
+					\fi
+			\fi
+	% Mathematical Font Setting
+		\if@dcprelib
+			\RequirePackage[libertine]{newtxmath}
+		\else
+			\RequirePackage{newtxmath}
+		\fi
+	% Digicon Macros
+		%%%% ShareLaTeX or Local %%%%
+			\if@dcpresharelatex
+				\RequirePackage{Macro/DigiconCmd,Macro/DigiconMath,Macro/DigiconWord,Macro/DigiconRef}
+				% Choosing Draft or Final
+					\if@dcpredraft
+						\RequirePackage[draft]{Macro/DigiconWork}
+					\else
+						\RequirePackage[final]{Macro/DigiconWork}
+					\fi
+			\else
+				\RequirePackage{DigiconCmd,DigiconMath,DigiconWord,DigiconRef}
+				% Choosing Draft or Final
+					\if@dcpredraft
+						\RequirePackage[draft]{DigiconWork}
+					\else
+						\RequirePackage[final]{DigiconWork}
+					\fi
+			\fi
+
+\endinput

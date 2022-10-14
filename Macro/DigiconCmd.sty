@@ -1,0 +1,18 @@
+% DigiconCmd.sty
+
+%%%% Compiling Date and Page Number Macros %%%%
+%%%% Identification %%%%
+	\ProvidesPackage{DigiconCmd}[2016/11/07 Compiling Date and Page Number Macro etc.]
+%%%% Package Main %%%%
+	% Format: "YYYY/MM/DD"
+		% \todayd
+		\newcommand{\todayd}{%
+		\the\year/{\ifnum \month < 10 0\the\month \else \the\month \fi}/%
+		{\ifnum \day < 10 0\the\day \else \the\day \fi}}
+	% Format: "YYYY-mm-dd"形式
+		% \todaye
+		\newcommand{\todaye}{\the\year--\the\month--\the\day}
+	% 2桁ページ数表示用コマンド
+		\newcommand{\thepaged}{%
+		\ifnum \thepage < 10 0\thepage \else \thepage \fi}
+\endinput

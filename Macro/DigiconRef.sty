@@ -1,0 +1,38 @@
+% DigiconRef.sty
+
+%%%% Digicon Reference Macros %%%%
+%%%% Identification %%%%
+	\ProvidesPackage{DigiconRef}[2016/11/22 Digital Control Laboratory Reference Macros]
+%%%% Preliminary Declarations %%%%
+	% Loading Packages
+		\RequirePackage{xparse}
+%%%% Package Main %%%%
+	% Refer to Figure(s)
+		% \figref{1st Ref}[nth Ref]
+		% \figref*{1st Ref}[2nd Ref]
+	\NewDocumentCommand\figref{s m o}{%
+		\IfValueTF{#3}{%
+			\IfBooleanTF{#1}{%
+				\@digiconfiguresname{}~\ref{#2}, \ref{#3}%
+			}{%
+				\@digiconfiguresname{}~\ref{#2} -- \ref{#3}%
+			}%
+		}{%
+			\figurename{}~\ref{#2}%
+		}%
+	}
+	% Refer to Table(s)
+		% \tabref{1st Ref}[nth Ref]
+		% \tabref*{1st Ref}[2nd Ref]
+	\NewDocumentCommand\tabref{s m o}{%
+		\IfValueTF{#3}{%
+			\IfBooleanTF{#1}{%
+				\@digicontablesname{}~\ref{#2}, \ref{#3}%
+			}{%
+				\@digicontablesname{}~\ref{#2} -- \ref{#3}%
+			}%
+		}{%
+			\tablename{}~\ref{#2}%
+		}%
+	}
+\endinput

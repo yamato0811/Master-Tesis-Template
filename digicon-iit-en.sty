@@ -1,0 +1,94 @@
+%%%% IIT Master Thesis Style and Macro %%%%
+%%%% Identification %%%%
+	\ProvidesPackage{digicon-iit-en}[2016/11/24 IIT Master Thesis Style and Macro (EN)]
+%%%% Preliminary Declarations %%%%
+	% Loading Packages
+		\RequirePackage{fancyhdr} % For Header and Footer
+		\RequirePackage{dashrule} % For Header Rule
+%%%% Options Declarations %%%%
+%%%% Package Main %%%%
+	%%%% Title Variables %%%%
+		\def\eauthor#1{\def\@eauthor{#1}}
+		\def\etitle#1{\gdef\@etitle{#1}}
+		\def\advisors#1{\def\@advisors{#1}}
+		\def\eadvisors#1{\def\@eadvisors{#1}}
+		\def\abstract#1{\def\@abstract{#1}}
+		\def\keywords#1{\def\@keywords{#1}}
+		\def\authorheader#1{\def\@authorheader{#1}}
+		\def\dateheader#1{\def\@dateheader{#1}}
+	%%%% Title Format %%%%
+		\def\@maketitle{
+			\begin{flushleft}
+				%%% 論文題目：副題目
+				%---------------------------------------
+				%14pt
+				\vspace{-2\Cht}
+				\fbox{{\fontsize{14pt}{0pt}\selectfont Master of Engineering at the University of Tsukuba}}
+				
+				\vspace{1\Cht}
+				{\fontsize{16pt}{28pt}\selectfont \rmfamily \bfseries \@etitle \\}
+				%12pt
+				\vspace{0.5\Cht}
+				{\fontsize{12pt}{0pt}\selectfont \sffamily \bfseries \@title }
+				\vspace{2\Cht}
+				
+				\begin{minipage}{\textwidth}
+					\hspace{-1\jsZw}
+					\begin{tabular}{p{20\jsZw} p{20\jsZw}}
+						{\fontsize{12pt}{0pt}\selectfont \@eauthor } & {\fontsize{9pt}{0pt}\selectfont Master's Program in Intelligent Interaction Technologies}\\
+						{\fontsize{12pt}{0pt}\selectfont \@author} & {\fontsize{9pt}{0pt}\selectfont 知能機能システム専攻}\\
+					\end{tabular}
+					\vspace{0.5\Cht}
+				\end{minipage}
+				\begin{minipage}{\textwidth}
+					\vbox{
+					\hbox{\hspace{-1\jsZw}{\fontsize{9pt}{0pt}\selectfont\@eadvisors}}
+					\hbox{\hspace{-1\jsZw}{\fontsize{9pt}{0pt}\selectfont\@advisors}}}
+				\end{minipage}
+				
+				\vspace{1\Cht}
+				
+				\begin{minipage}{\textwidth}
+					\fontsize{10pt}{16pt}\selectfont
+					\@abstract
+					
+					keywords: \@keywords
+				\end{minipage}
+			\end{flushleft}
+			\vspace{1.5\Cht}
+		}
+	%%%% Sections Format %%%%
+		\def\section{\@startsection {section}{1}{\z@}{1\jsZw}{.1pt}{\normalsize\textbf}}
+		\def\subsection{\@startsection {subsection}{1}{\z@}{1\jsZw}{.1pt}{\normalsize}}
+		\def\subsubsection{\@startsection {subsubsection}{1}{\z@}{1\jsZw}{.1pt}{\normalsize}}
+	%%%% Header and Footer Setting %%%%
+		\fancypagestyle{iithf}{% Titleページ以外のレイアウト
+			\fancyhead{} % Initialized All Header Fields
+			\fancyfoot{} % Initialized All Footer Fields
+			\fancyhead[L]{\footnotesize 筑波大学大学院博士課程システム情報工学研究科修士論文(\@dateheader）}
+			\fancyhead[R]{\footnotesize \@authorheader}
+			\fancyfoot[C]{\vspace{5truemm} \hfil--\,\thepage\,--\hfil}
+			\renewcommand\headrule{\hdashrule[2.8ex][x]{\textwidth}{0.3pt}{1mm}} % ヘッダー部罫線を破線に変更
+			\renewcommand{\footrulewidth}{0pt} % フッター部罫線を削除
+		}
+		\fancypagestyle{plainhead}{% Titleページのレイアウト(maketitleによって強制的にページスタイルが変わるために必要な設定)
+			\fancyhead{} % Initialized All Header Fields
+			\fancyfoot{} % Initialized All Footer Fields
+			\fancyhead[L]{\footnotesize 筑波大学大学院博士課程システム情報工学研究科修士論文(\@dateheader）}
+			\fancyhead[R]{\footnotesize \@authorheader}
+			\fancyfoot[C]{\vspace{5truemm} \hfil--\,\thepage\,--\hfil}
+			\renewcommand\headrule{\hdashrule[2.8ex][x]{\textwidth}{0.3pt}{1mm}} % ヘッダー部罫線を破線に変更
+			\renewcommand{\footrulewidth}{0pt} % フッター部罫線を削除
+		}
+		\pagestyle{iithf} % Setting Header and Footer Style
+	%%%% Some Macros %%%%
+		\def\lcaption#1{\renewcommand{\baselinestretch}{0.75}\caption{#1}} % For Long Caption
+		% Cannot Work with Biblatex
+		%\renewcommand{\@biblabel}[1]{#1) } % Bib Label
+		%\def\@cite#1{\textsuperscript{\scriptsize{#1)}}} % Cite Label
+	%%%% Figures' and Tables' Caption %%%%
+		\renewcommand{\figurename}{Figure} % Figure's Caption
+		\newcommand{\@digiconfiguresname}{Figures} % Figures' Caption
+		\renewcommand{\tablename}{Table} % Table's Caption
+		\newcommand{\@digicontablesname}{Tables} % Tables' Caption
+\endinput

@@ -1,0 +1,15 @@
+% DigiconWord.sty
+
+%%%% 単語の日英表記用コマンド %%%%
+%%%% Identification %%%%
+	\ProvidesPackage{DigiconWord}[2016/11/07 Jp-En Words Macro]
+%%%% Package Main %%%%
+	%日本語(英語)表記 兼 索引へ追加
+		%\dcword{日本語単語}[日本語単語ひらがな読み]{英語単語}
+		\NewDocumentCommand\dcword{m o m}{%
+			{%
+				\IfValueTF{#2}{\index{#2@#1}}{\index{#1}}%
+				\textsf{\bfseries #1}(\index{#3}\textsf{\emp #3})%
+			}%
+		}
+\endinput
